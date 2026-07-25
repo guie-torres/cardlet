@@ -41,6 +41,7 @@ def render_add():
     if st.button("Save Deck") and name.strip():
         storage.decks.append(deck.Deck(name, []))
         st.success("Added!")
+        storage.save()
         set_state(None)
 
 
@@ -56,12 +57,17 @@ def render_delete():
     if st.button("Delete Deck"):
         del storage.decks[deckID]
         st.success("Deleted!")
+        storage.save()
         set_state(None)
 
 
 def render_add_to_deck():
     if len(storage.decks) <= 0:
         st.write("No Decks!")
+        return
+
+    if len(storage.cards) <= 0:
+        st.write("No Cards!")
         return
 
     deckID = st.number_input("Deck index", step=1,
@@ -82,12 +88,17 @@ def render_add_to_deck():
     if st.button("ADD"):
         _deck.cards.append(_card)
         st.success("Changed!")
+        storage.save()
         set_state(None)
 
 
 def render_remove_from_deck():
     if len(storage.decks) <= 0:
         st.write("No Decks!")
+        return
+
+    if len(storage.cards) <= 0:
+        st.write("No Cards!")
         return
 
     deckID = st.number_input("Deck index", step=1,
@@ -98,8 +109,13 @@ def render_remove_from_deck():
         f"""
                 ### DECK NAME: {_deck.name}""")
 
+    if len(_deck.cards) == 0:
+        st.write("No Cards!")
+        return
+
     cardID = st.number_input("Card index", step=1,
                              min_value=0, max_value=len(_deck.cards) - 1)
+
     _card = _deck.cards[cardID]
 
     st.markdown(f"***Front:*** {_card.front}")
