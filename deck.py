@@ -1,4 +1,4 @@
 class Deck:
-    def __init__(self, name, content):
+    def __init__(self, name, cards):
         self.name = name
-        self.content = content
+        self.cards = cards
