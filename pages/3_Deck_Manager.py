@@ -16,6 +16,9 @@ def render_main():
     if st.button("ADD DECK"):
         set_state("add")
 
+    if st.button("DELETE DECK"):
+        set_state("delete")
+
     if st.button("ADD TO DECK"):
         set_state("add to deck")
 
@@ -38,6 +41,21 @@ def render_add():
     if st.button("Save Deck") and name.strip():
         storage.decks.append(deck.Deck(name, []))
         st.success("Added!")
+        set_state(None)
+
+
+def render_delete():
+    deckID = st.number_input("Deck index", step=1,
+                             min_value=0, max_value=len(storage.decks) - 1)
+
+    _deck = storage.decks[deckID]
+    st.markdown(
+        f"""
+                    ### DECK NAME: {_deck.name}""")
+
+    if st.button("Delete Deck"):
+        del storage.decks[deckID]
+        st.success("Deleted!")
         set_state(None)
 
 
@@ -131,6 +149,9 @@ match st.session_state.mode:
         render_backbutton()
     case "remove from deck":
         render_remove_from_deck()
+        render_backbutton()
+    case "delete":
+        render_delete()
         render_backbutton()
     case _:
         render_main()
