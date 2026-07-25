@@ -47,7 +47,7 @@ def render_add():
 
 def render_delete():
     deckID = st.number_input("Deck index", step=1,
-                             min_value=0, max_value=len(storage.decks) - 1)
+                             min_value=1, max_value=len(storage.decks) - 1)
 
     _deck = storage.decks[deckID]
     st.markdown(
@@ -62,8 +62,8 @@ def render_delete():
 
 
 def render_add_to_deck():
-    if len(storage.decks) <= 0:
-        st.write("No Decks!")
+    if len(storage.decks) <= 1:
+        st.write("No Custom Decks!")
         return
 
     if len(storage.cards) <= 0:
@@ -71,7 +71,7 @@ def render_add_to_deck():
         return
 
     deckID = st.number_input("Deck index", step=1,
-                             min_value=0, max_value=len(storage.decks) - 1)
+                             min_value=1, max_value=len(storage.decks) - 1)
 
     _deck = storage.decks[deckID]
     st.markdown(
@@ -93,8 +93,8 @@ def render_add_to_deck():
 
 
 def render_remove_from_deck():
-    if len(storage.decks) <= 0:
-        st.write("No Decks!")
+    if len(storage.decks) <= 1:
+        st.write("No Custom Decks!")
         return
 
     if len(storage.cards) <= 0:
@@ -102,7 +102,7 @@ def render_remove_from_deck():
         return
 
     deckID = st.number_input("Deck index", step=1,
-                             min_value=0, max_value=len(storage.decks) - 1)
+                             min_value=1, max_value=len(storage.decks) - 1)
 
     _deck = storage.decks[deckID]
     st.markdown(

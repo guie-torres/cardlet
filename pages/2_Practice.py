@@ -2,15 +2,14 @@ import streamlit as st
 import storage
 import random
 
-if "loaded" not in st.session_state:
-    storage.load()
-    st.session_state.loaded = True
-
 if "card_index" not in st.session_state:
     st.session_state.card_index = 0
 
 if "s_deck" not in st.session_state:
     st.session_state.s_deck = []
+
+if "mode" not in st.session_state:
+    st.session_state.mode = None
 
 if len(storage.cards) <= 0:
     st.write("NO CARDS!")

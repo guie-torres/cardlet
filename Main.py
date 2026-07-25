@@ -1,4 +1,9 @@
 import streamlit as st
+import storage
+
+if "loaded" not in st.session_state:
+    storage.load()
+    st.session_state.loaded = True
 
 st.write("WELCOME TO CARDLET!")
 

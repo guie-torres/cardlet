@@ -33,7 +33,6 @@ def save():
 
 def load():
     cards.clear()
-
     try:
         with open("cards.json", "r") as file:
             data = json.load(file)
@@ -42,6 +41,12 @@ def load():
             cards.append(card.Card(item["front"], item["back"], item["id"]))
     except FileNotFoundError:
         pass
+
+    decks.clear()
+    decks.append(deck.Deck("Main", []))
+
+    for c in cards:
+        decks[0].cards.append(c)
 
     try:
         with open("decks.json", "r") as file:
