@@ -140,6 +140,7 @@ def render_list():
 
         for j in range(0, len(_deck.cards)):
             _card = _deck.cards[j]
+            st.markdown(f"### CARD {j}:")
             st.markdown(f"***Front:*** {_card.front}")
             st.markdown(f"***Back:*** {_card.back}")
 
