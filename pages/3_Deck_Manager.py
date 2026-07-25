@@ -46,6 +46,10 @@ def render_add():
 
 
 def render_delete():
+    if len(storage.decks) <= 1:
+        st.write("No Custom Decks!")
+        return
+
     deckID = st.number_input("Deck index", step=1,
                              min_value=1, max_value=len(storage.decks) - 1)
 
@@ -131,6 +135,9 @@ def render_list():
     if len(storage.decks) <= 0:
         st.write("No Decks!")
         return
+
+    for c in storage.cards:
+        print(type(c))
 
     for i in range(0, len(storage.decks)):
         _deck = storage.decks[i]

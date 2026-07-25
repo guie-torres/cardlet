@@ -6,7 +6,7 @@ if "card_index" not in st.session_state:
     st.session_state.card_index = 0
 
 if "s_deck" not in st.session_state:
-    st.session_state.s_deck = []
+    st.session_state.s_deck = None
 
 if "mode" not in st.session_state:
     st.session_state.mode = None
@@ -14,6 +14,37 @@ if "mode" not in st.session_state:
 if len(storage.cards) <= 0:
     st.write("NO CARDS!")
     st.stop()
+
+
+def set_state(state):
+    st.session_state.mode = state
+    st.rerun()
+
+
+def select_menu():
+    st.write("### SELECT DECK")
+
+    deckID = st.number_input("Deck index", step=1,
+                             min_value=0, max_value=len(storage.decks) - 1)
+
+    _deck = storage.decks[deckID]
+    st.write(f"""### DECK NAME: {_deck.name}""")
+
+    if st.button("PRACTICE"):
+        st.session_state.s_deck = shuffle_deck(_deck.cards)
+        set_state("practice")
+
+
+def practice():
+    if st.session_state.card_index < len(st.session_state.s_deck):
+        render_card(st.session_state.s_deck[st.session_state.card_index])
+    elif st.button("RESHUFFLE"):
+        st.session_state.s_deck = shuffle_deck(st.session_state.s_deck)
+        st.session_state.card_index = 0
+        st.rerun()
+
+    if st.button("BACK"):
+        set_state("select")
 
 
 def shuffle_deck(deck):
@@ -44,15 +75,15 @@ def render_card(card):
         st.rerun()
 
 
-if st.session_state.s_deck == []:
-    st.session_state.s_deck = shuffle_deck(storage.cards)
+if st.session_state.s_deck == None:
+    st.session_state.mode = "select"
 
-if st.session_state.card_index < len(st.session_state.s_deck):
-    render_card(st.session_state.s_deck[st.session_state.card_index])
-elif st.button("RESHUFFLE"):
-    st.session_state.s_deck = shuffle_deck(storage.cards)
-    st.session_state.card_index = 0
-    st.rerun()
+match st.session_state.mode:
+    case "select":
+        select_menu()
+
+    case "practice":
+        practice()
 
 if st.button("RETURN TO MAIN MENU"):
     st.switch_page("Main.py")
