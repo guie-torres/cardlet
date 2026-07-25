@@ -62,8 +62,7 @@ def render_list():
             f"""
             ### Card {i + 1}:
             - **front:** {_card.front}
-            - **Back:** {_card.back}
-            - **ID:** {_card.id}""")
+            - **Back:** {_card.back}""")
 
 
 def render_edit():
@@ -101,7 +100,6 @@ def render_view():
     _card = storage.cards[index]
     st.markdown(f"***Front:*** {_card.front}")
     st.markdown(f"***Back:*** {_card.back}")
-    st.markdown(f"***ID:*** {_card.id}")
 
 
 def render_delete():

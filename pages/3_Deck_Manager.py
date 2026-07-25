@@ -78,7 +78,6 @@ def render_add_to_deck():
 
     st.markdown(f"***Front:*** {_card.front}")
     st.markdown(f"***Back:*** {_card.back}")
-    st.markdown(f"***ID:*** {_card.id}")
 
     if st.button("ADD"):
         _deck.cards.append(_card)
@@ -105,7 +104,6 @@ def render_remove_from_deck():
 
     st.markdown(f"***Front:*** {_card.front}")
     st.markdown(f"***Back:*** {_card.back}")
-    st.markdown(f"***ID:*** {_card.id}")
 
     if st.button("REMOVE"):
         del _deck.cards[cardID]
@@ -128,7 +126,6 @@ def render_list():
             _card = _deck.cards[j]
             st.markdown(f"***Front:*** {_card.front}")
             st.markdown(f"***Back:*** {_card.back}")
-            st.markdown(f"***ID:*** {_card.id}")
 
 
 def render_backbutton():
