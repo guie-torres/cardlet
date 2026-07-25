@@ -19,6 +19,9 @@ def render_main():
     if st.button("ADD TO DECK"):
         set_state("add to deck")
 
+    if st.button("REMOVE FROM DECK"):
+        set_state("remove from deck")
+
     if st.button("LIST DECKS"):
         set_state("list")
 
@@ -51,7 +54,7 @@ def render_add_to_deck():
         f"""
                 ### DECK NAME: {_deck.name}""")
 
-    cardID = st.number_input("Deck index", step=1,
+    cardID = st.number_input("Card index", step=1,
                              min_value=0, max_value=len(storage.cards) - 1)
     _card = storage.cards[cardID]
 
@@ -62,6 +65,33 @@ def render_add_to_deck():
     if st.button("ADD"):
         _deck.cards.append(_card)
         st.success("Changed!")
+        set_state(None)
+
+
+def render_remove_from_deck():
+    if len(storage.decks) <= 0:
+        st.write("No Decks!")
+        return
+
+    deckID = st.number_input("Deck index", step=1,
+                             min_value=0, max_value=len(storage.decks) - 1)
+
+    _deck = storage.decks[deckID]
+    st.markdown(
+        f"""
+                ### DECK NAME: {_deck.name}""")
+
+    cardID = st.number_input("Card index", step=1,
+                             min_value=0, max_value=len(_deck.cards) - 1)
+    _card = _deck.cards[cardID]
+
+    st.markdown(f"***Front:*** {_card.front}")
+    st.markdown(f"***Back:*** {_card.back}")
+    st.markdown(f"***ID:*** {_card.id}")
+
+    if st.button("REMOVE"):
+        del _deck.cards[cardID]
+        st.success("Removed!")
         set_state(None)
 
 
@@ -98,6 +128,9 @@ match st.session_state.mode:
 
     case "add to deck":
         render_add_to_deck()
+        render_backbutton()
+    case "remove from deck":
+        render_remove_from_deck()
         render_backbutton()
     case _:
         render_main()
