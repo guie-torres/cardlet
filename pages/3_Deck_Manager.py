@@ -90,7 +90,7 @@ def render_add_to_deck():
     st.markdown(f"***Back:*** {_card.back}")
 
     if st.button("ADD"):
-        _deck.cards.append(_card)
+        _deck.cards.append(_card.id)
         st.success("Changed!")
         storage.save()
         set_state(None)
@@ -132,12 +132,13 @@ def render_remove_from_deck():
 
 
 def render_list():
+    for d in storage.decks:
+        print(type(d))
+        print(d.__dict__)
+
     if len(storage.decks) <= 0:
         st.write("No Decks!")
         return
-
-    for c in storage.cards:
-        print(type(c))
 
     for i in range(0, len(storage.decks)):
         _deck = storage.decks[i]

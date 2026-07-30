@@ -6,5 +6,5 @@ class Deck:
     def to_dict(self):
         return {
             "name": self.name,
-            "cards": [card.to_dict() for card in self.cards],
+            "cards": [card for card in self.cards],
         }

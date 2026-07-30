@@ -49,7 +49,8 @@ def load():
 
         for item in data:
             decks.append(
-                deck.Deck(item["name"], item["cards"]))
+                deck.Deck(item["name"], item["cards"])
+            )
     except FileNotFoundError:
         decks.append(deck.Deck("Main", []))
         save()
@@ -58,6 +59,7 @@ def load():
         with open("data.json", "r") as file:
             data = json.load(file)
 
+        global nextID
         nextID = data["next_card_id"]
     except FileNotFoundError:
         pass
