@@ -37,13 +37,15 @@ def select_menu():
 
 def practice():
     if st.session_state.card_index < len(st.session_state.s_deck):
-        render_card(st.session_state.s_deck[st.session_state.card_index])
+        render_card(storage.find_card(
+            st.session_state.s_deck[st.session_state.card_index]))
     elif st.button("RESHUFFLE"):
         st.session_state.s_deck = shuffle_deck(st.session_state.s_deck)
         st.session_state.card_index = 0
         st.rerun()
 
     if st.button("BACK"):
+        st.session_state.card_index = 0
         set_state("select")
 
 
