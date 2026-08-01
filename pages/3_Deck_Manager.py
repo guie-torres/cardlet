@@ -128,6 +128,7 @@ def render_remove_from_deck():
     if st.button("REMOVE"):
         del _deck.cards[cardID]
         st.success("Removed!")
+        storage.save()
         set_state(None)
 
 
