@@ -120,7 +120,7 @@ def render_remove_from_deck():
     cardID = st.number_input("Card index", step=1,
                              min_value=0, max_value=len(_deck.cards) - 1)
 
-    _card = _deck.cards[cardID]
+    _card = storage.find_card(_deck.cards[cardID])
 
     st.markdown(f"***Front:*** {_card.front}")
     st.markdown(f"***Back:*** {_card.back}")
@@ -147,7 +147,7 @@ def render_list():
                 ### DECK NAME: {_deck.name}""")
 
         for j in range(0, len(_deck.cards)):
-            _card = _deck.cards[j]
+            _card = storage.find_card(_deck.cards[j])
             st.markdown(f"### CARD {j}:")
             st.markdown(f"***Front:*** {_card.front}")
             st.markdown(f"***Back:*** {_card.back}")

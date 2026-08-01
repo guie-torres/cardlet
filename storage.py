@@ -63,3 +63,10 @@ def load():
         nextID = data["next_card_id"]
     except FileNotFoundError:
         pass
+
+
+def find_card(card_id):
+    for card in cards:
+        if card.id == card_id:
+            return card
+    return None
