@@ -23,6 +23,7 @@ Input command word (edit, view, delete, or add)
 def add(front, back, id):
     storage.cards.append(card.Card(front, back, id))
     storage.decks[0].cards.append(id)
+    storage.nextID += 1
     storage.save()
 
 

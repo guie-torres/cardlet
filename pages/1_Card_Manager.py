@@ -4,10 +4,6 @@ import streamlit as st
 import logic
 import storage
 
-if "loaded" not in st.session_state:
-    storage.load()
-    st.session_state.loaded = True
-
 if "mode" not in st.session_state:
     st.session_state.mode = None
 
@@ -46,8 +42,8 @@ def render_add():
 
     if st.button("Save Card") and front.strip() and back.strip():
         logic.add(front, back, storage.nextID)
-        storage.nextID += 1
         st.success("Added!")
+
         set_state(None)
 
 
