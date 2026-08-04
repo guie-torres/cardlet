@@ -2,7 +2,7 @@
 
 import streamlit as st
 import logic
-import storage
+from storage import storage
 
 if "mode" not in st.session_state:
     st.session_state.mode = None
@@ -41,7 +41,7 @@ def render_add():
     back = st.text_input("Input back text")
 
     if st.button("Save Card") and front.strip() and back.strip():
-        logic.add(front, back, storage.nextID)
+        logic.add_card(front, back, storage.nextID)
         st.success("Added!")
 
         set_state(None)
@@ -77,7 +77,7 @@ def render_edit():
     back = st.text_input("Input back text", value=storage.cards[index].back)
 
     if st.button("Save Card") and front.strip() and back.strip():
-        logic.edit(index, front, back)
+        logic.edit_card(index, front, back)
         st.success("Edited!")
         set_state(None)
 
@@ -113,7 +113,7 @@ def render_delete():
     st.markdown(f"***Back:*** {storage.cards[index].back}")
 
     if (st.button("DELETE")):
-        logic.delete(index)
+        logic.delete_card(index)
         st.error("DELETED")
         set_state(None)
 

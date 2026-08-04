@@ -1,7 +1,8 @@
 import streamlit as st
-import storage
-import deck
-import card
+from storage import storage
+import models.deck as deck
+import models.card as card
+import logic
 
 if "mode" not in st.session_state:
     st.session_state.mode = None
@@ -39,9 +40,8 @@ def render_add():
     name = st.text_input("Input deck name")
 
     if st.button("Save Deck") and name.strip():
-        storage.decks.append(deck.Deck(name, []))
+        logic.add_deck(name)
         st.success("Added!")
-        storage.save()
         set_state(None)
 
 
@@ -59,9 +59,8 @@ def render_delete():
                     ### DECK NAME: {_deck.name}""")
 
     if st.button("Delete Deck"):
-        del storage.decks[deckID]
+        logic.delete_deck(deckID)
         st.success("Deleted!")
-        storage.save()
         set_state(None)
 
 
@@ -90,9 +89,8 @@ def render_add_to_deck():
     st.markdown(f"***Back:*** {_card.back}")
 
     if st.button("ADD"):
-        _deck.cards.append(_card.id)
+        logic.add_to_deck(_deck, _card.id)
         st.success("Changed!")
-        storage.save()
         set_state(None)
 
 
@@ -126,9 +124,8 @@ def render_remove_from_deck():
     st.markdown(f"***Back:*** {_card.back}")
 
     if st.button("REMOVE"):
-        del _deck.cards[cardID]
+        logic.remove_from_deck(_deck, cardID)
         st.success("Removed!")
-        storage.save()
         set_state(None)
 
 

@@ -1,5 +1,5 @@
 import streamlit as st
-import storage
+import storage.storage as storage
 
 if "loaded" not in st.session_state:
     storage.load()
