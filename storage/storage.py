@@ -5,8 +5,6 @@ import models.deck as deck
 cards = []
 decks = []
 
-nextID = 0
-
 
 def save():
     data = []
@@ -14,13 +12,6 @@ def save():
         data.append(c.to_dict())
 
     with open("storage/cards.json", "w") as file:
-        json.dump(data, file, indent=4)
-
-    data = {
-        "next_card_id": nextID
-    }
-
-    with open("storage/data.json", "w") as file:
         json.dump(data, file, indent=4)
 
     data = []
@@ -49,20 +40,11 @@ def load():
 
         for item in data:
             decks.append(
-                deck.Deck(item["name"], item["cards"])
+                deck.Deck(item["name"], item["cards"], item["id"])
             )
     except FileNotFoundError:
         decks.append(deck.Deck("Main", []))
         save()
-
-    try:
-        with open("storage/data.json", "r") as file:
-            data = json.load(file)
-
-        global nextID
-        nextID = data["next_card_id"]
-    except FileNotFoundError:
-        pass
 
 
 def find_card(card_id):

@@ -2,14 +2,16 @@ import models.card as card
 import storage.storage as storage
 import streamlit as st
 import models.deck as deck
+import uuid
 
 # CARD LOGIC
 
 
-def add_card(front, back, id):
+def add_card(front, back):
+    id = str(uuid.uuid4())
+
     storage.cards.append(card.Card(front, back, id))
     storage.decks[0].cards.append(id)
-    storage.nextID += 1
     storage.save()
 
 
@@ -35,7 +37,7 @@ def delete_card(index):
 
 
 def add_deck(name):
-    storage.decks.append(deck.Deck(name, []))
+    storage.decks.append(deck.Deck(name, [], str(uuid.uuid4())))
     storage.save()
 
 
