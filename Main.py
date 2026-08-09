@@ -3,13 +3,19 @@ import storage.storage as storage
 import utils.ui as ui
 import utils.session as session
 
-session.current_page("practice")
-
 ui.load_css("main_style")
+
+if "current_page" not in st.session_state:
+    st.session_state.current_page = "none"
 
 if "loaded" not in st.session_state:
     storage.load()
     st.session_state.loaded = True
+
+if "mode" not in st.session_state:
+    st.session_state.mode = None
+
+session.on_page_load("main")
 
 st.markdown(
     """

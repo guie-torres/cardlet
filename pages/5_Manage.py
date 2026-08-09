@@ -4,7 +4,7 @@ import utils.ui as ui
 import logic
 import utils.session as session
 
-session.current_page("manage")
+session.on_page_load("manage")
 ui.load_css("general")
 
 if "mode" not in st.session_state:

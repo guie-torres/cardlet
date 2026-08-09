@@ -1,9 +1,9 @@
 import streamlit as st
 
-current_page = ""
-
 
 def on_page_load(page):
-    if page != current_page:
-        current_page = page
-        st.session_state = None
+    if page == st.session_state.current_page:
+        return
+
+    st.session_state.current_page = page
+    st.session_state.mode = None

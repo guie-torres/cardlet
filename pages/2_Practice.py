@@ -4,7 +4,7 @@ import random
 import utils.ui as ui
 import utils.session as session
 
-session.current_page("practice")
+session.on_page_load("practice")
 
 if "card_index" not in st.session_state:
     st.session_state.card_index = 0
@@ -24,12 +24,6 @@ if len(storage.cards) <= 0:
 
 ui.load_css("general")
 ui.load_css("practice_style")
-
-
-flip = False
-next = False
-back = False
-menu = True
 
 
 def set_state(state):
@@ -52,10 +46,6 @@ def select_menu():
 
 
 def practice():
-    menu = True
-    flip = True
-    next = True
-
     if st.session_state.card_index < len(st.session_state.s_deck):
         render_card(storage.find_card(
             st.session_state.s_deck[st.session_state.card_index]))
@@ -117,6 +107,9 @@ def render_buttons(practice):
         if st.button("BACK TO MENU", key="return_practice"):
             st.switch_page("Main.py")
 
+
+if st.session_state.mode == None:
+    st.session_state.mode = "select"
 
 match st.session_state.mode:
     case "select":
