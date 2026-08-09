@@ -2,6 +2,9 @@ import streamlit as st
 from storage import storage
 import random
 import utils.ui as ui
+import utils.session as session
+
+session.current_page("practice")
 
 if "card_index" not in st.session_state:
     st.session_state.card_index = 0
@@ -10,14 +13,23 @@ if "s_deck" not in st.session_state:
     st.session_state.s_deck = None
 
 if "mode" not in st.session_state:
-    st.session_state.mode = None
+    st.session_state.mode = "select"
+
+if "front" not in st.session_state:
+    st.session_state.front = True
 
 if len(storage.cards) <= 0:
     st.write("NO CARDS!")
     st.stop()
 
+ui.load_css("general")
 ui.load_css("practice_style")
-# ui.load_css("general_buttons")
+
+
+flip = False
+next = False
+back = False
+menu = True
 
 
 def set_state(state):
@@ -40,6 +52,10 @@ def select_menu():
 
 
 def practice():
+    menu = True
+    flip = True
+    next = True
+
     if st.session_state.card_index < len(st.session_state.s_deck):
         render_card(storage.find_card(
             st.session_state.s_deck[st.session_state.card_index]))
@@ -47,10 +63,6 @@ def practice():
         st.session_state.s_deck = shuffle_deck(st.session_state.s_deck)
         st.session_state.card_index = 0
         st.rerun()
-
-    if st.button("BACK"):
-        st.session_state.card_index = 0
-        set_state("select")
 
 
 def shuffle_deck(deck):
@@ -71,18 +83,40 @@ def shuffle_deck(deck):
 
 
 def render_card(card):
-    st.write(f"***{card.front}***")
+    text = ""
 
-    if (st.button("REVEAL ANSWER")):
-        st.write(f"***{card.back}***")
+    if st.session_state.front:
+        text = card.front
+    else:
+        text = card.back
 
-    if (st.button("NEXT CARD")):
-        st.session_state.card_index += 1
-        st.rerun()
+    ui.render_card_practice(card, text)
 
 
-if st.session_state.s_deck == None:
-    st.session_state.mode = "select"
+def render_buttons(practice):
+    col1, col2, col3, col4 = st.columns([1, 1, 1, 1])
+
+    if practice:
+        with col1:
+            if (st.button("FLIP")):
+                st.session_state.front = not st.session_state.front
+                st.rerun()
+
+        with col2:
+            if (st.button("NEXT")):
+                st.session_state.front = True
+                st.session_state.card_index += 1
+                st.rerun()
+
+        with col3:
+            if st.button("BACK"):
+                st.session_state.card_index = 0
+                set_state("select")
+
+    with col4:
+        if st.button("BACK TO MENU", key="return_practice"):
+            st.switch_page("Main.py")
+
 
 match st.session_state.mode:
     case "select":
@@ -91,5 +125,4 @@ match st.session_state.mode:
     case "practice":
         practice()
 
-if st.button("RETURN TO MAIN MENU"):
-    st.switch_page("Main.py")
+render_buttons(st.session_state.mode == "practice")

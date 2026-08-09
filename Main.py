@@ -1,6 +1,9 @@
 import streamlit as st
 import storage.storage as storage
 import utils.ui as ui
+import utils.session as session
+
+session.current_page("practice")
 
 ui.load_css("main_style")
 

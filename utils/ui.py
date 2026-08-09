@@ -10,6 +10,17 @@ def load_css(path):
                     unsafe_allow_html=True)
 
 
+def render_card_practice(card, text):
+    st.markdown(
+        f"""
+                <div class="flashcard">
+                    <h3 class="card-front">{text}</h3>
+                </div>
+                """,
+        unsafe_allow_html=True
+    )
+
+
 def render_card(card, deck):
     col1, col2 = st.columns([3, 1])
 
@@ -193,5 +204,5 @@ def render_backbutton():
 
 
 def render_back_to_menu_button():
-    if st.button("RETURN TO MAIN MENU"):
+    if st.button("MAIN MENU"):
         st.switch_page("Main.py")

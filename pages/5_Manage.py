@@ -2,6 +2,9 @@ import streamlit as st
 import storage.storage as storage
 import utils.ui as ui
 import logic
+import utils.session as session
+
+session.current_page("manage")
 ui.load_css("general")
 
 if "mode" not in st.session_state:

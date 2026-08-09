@@ -4,7 +4,8 @@ import streamlit as st
 
 _card = storage.cards[0]
 ui.load_css("general")
-
 ui.render_card_deck(_card, storage.decks[0])
 
 ui.render_card_edit(_card)
+
+ui.render_card_practice(_card, _card.front)
