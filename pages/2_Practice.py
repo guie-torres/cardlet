@@ -80,7 +80,7 @@ def render_card(card):
     else:
         text = card.back
 
-    ui.render_card_practice(card, text)
+    ui.render_card_practice(text)
 
 
 def render_buttons(practice):

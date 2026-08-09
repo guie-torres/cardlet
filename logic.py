@@ -18,6 +18,7 @@ def add_card(front, back):
     storage.cards.append(card.Card(front, back, id))
     storage.decks[0].cards.append(id)
     storage.save()
+    return get_card_id(id)
 
 
 def edit_card(card, front, back):
@@ -43,8 +44,10 @@ def get_card_id(id):
 
 
 def add_deck(name):
-    storage.decks.append(deck.Deck(name, [], str(uuid.uuid4())))
+    id = str(uuid.uuid4())
+    storage.decks.append(deck.Deck(name, [], id))
     storage.save()
+    return get_deck_id(id)
 
 
 def delete_deck(deck):

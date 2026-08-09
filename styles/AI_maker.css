@@ -15,13 +15,6 @@
 }
 
 .stButton > button{
-    width: 350px;
-    height: 70px;
-    border-radius: 20px;     
-}
-
-.stButton > button p {
-    margin: 0;
-    font-size: 32px;
-    font-weight: 600;
+    height: 50px;
+    width: 90px;
 }

@@ -19,8 +19,8 @@ session.on_page_load("main")
 
 st.markdown(
     """
-    <div class="main-title" id="test">
-        <h1 id="snoo">WELCOME TO CARDLET</h1>
+    <div class="main-title">
+        <h1>WELCOME TO CARDLET</h1>
         <p>An AI powered flashcard maker!</p>
     </div>
     """,

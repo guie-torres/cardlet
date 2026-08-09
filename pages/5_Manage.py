@@ -69,7 +69,6 @@ def render_add_deck():
 
 
 def render_add_to_deck():
-    st.write(st.session_state.addCardId)
     ui.render_card_add_to_deck(logic.get_card_id(st.session_state.addCardId))
     ui.render_backbutton()
 

@@ -10,7 +10,7 @@ def load_css(path):
                     unsafe_allow_html=True)
 
 
-def render_card_practice(card, text):
+def render_card_practice(text):
     st.markdown(
         f"""
                 <div class="flashcard">
