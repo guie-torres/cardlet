@@ -33,9 +33,12 @@ left, center, right = st.columns([1, 2, 1])
 
 with center:
     if st.button("MANAGE", use_container_width=True):
-        st.switch_page("pages/5_Manage.py")
+        st.switch_page("pages/1_Manage.py")
 
     if st.button("PRACTICE", use_container_width=True):
         st.switch_page("pages/2_Practice.py")
+
+    if st.button("AI MAKER", use_container_width=True):
+        st.switch_page("pages/3_AI_Deck_Maker.py")
 
 st.markdown('</div>', unsafe_allow_html=True)

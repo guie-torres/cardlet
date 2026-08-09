@@ -26,11 +26,6 @@ ui.load_css("general")
 ui.load_css("practice_style")
 
 
-def set_state(state):
-    st.session_state.mode = state
-    st.rerun()
-
-
 def select_menu():
     st.write("### SELECT DECK")
 
@@ -42,7 +37,7 @@ def select_menu():
 
     if st.button("PRACTICE"):
         st.session_state.s_deck = shuffle_deck(_deck.cards)
-        set_state("practice")
+        session.set_state("practice")
 
 
 def practice():
@@ -101,7 +96,7 @@ def render_buttons(practice):
         with col3:
             if st.button("BACK"):
                 st.session_state.card_index = 0
-                set_state("select")
+                session.set_state("select")
 
     with col4:
         if st.button("BACK TO MENU", key="return_practice"):

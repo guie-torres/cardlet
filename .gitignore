@@ -7,3 +7,5 @@ data/
 *.json
 
 .env
+
+old/

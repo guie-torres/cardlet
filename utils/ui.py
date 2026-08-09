@@ -1,6 +1,7 @@
 import streamlit as st
 import storage.storage as storage
 import logic
+import utils.session as session
 rendered_decks = []
 
 
@@ -38,15 +39,15 @@ def render_card(card, deck):
     with col2:
         if st.button("✏️ Edit", key=f"edit_{deck.id}/{card.id}", use_container_width=True):
             st.session_state.editCardId = card.id
-            logic.set_state("editCard")
+            session.set_state("editCard")
 
         if st.button("🗑️ Delete", key=f"delete_{deck.id}/{card.id}", use_container_width=True):
             st.session_state.deleteCardId = card.id
-            logic.set_state("deleteCard")
+            session.set_state("deleteCard")
 
         if st.button("✅ Add", key=f"add_{deck.id}/{card.id}", use_container_width=True):
             st.session_state.addCardId = card.id
-            logic.set_state("addToDeck")
+            session.set_state("addToDeck")
 
 
 def render_card_deck(card, deck):
@@ -65,11 +66,11 @@ def render_card_deck(card, deck):
 
     with col2:
         if st.button("✏️ Edit", key=f"edit_{deck.id}/{card.id}", use_container_width=True):
-            logic.set_state("editCard")
+            session.set_state("editCard")
 
         if st.button("🗑️ Delete", key=f"delete_{deck.id}/{card.id}", use_container_width=True):
             st.session_state.deleteCardId = card.id
-            logic.set_state("deleteCard")
+            session.set_state("deleteCard")
 
         if st.button("❌ Remove", key=f"remove_{deck.id}/{card.id}", use_container_width=True):
             logic.remove_from_deck(deck, card)
@@ -84,7 +85,7 @@ def render_card_add():
         logic.add_card(front, back)
         st.success("Added!")
 
-        logic.set_state(None)
+        session.set_state(None)
 
 
 def render_deck_delete(deck):
@@ -95,7 +96,7 @@ def render_deck_delete(deck):
     if st.text_input('WRITE "CONFIRM"') == "CONFIRM" and st.button("DELETE"):
         st.success("DELETED")
         logic.delete_deck(deck)
-        logic.set_state(None)
+        session.set_state(None)
 
 
 def render_card_delete(card):
@@ -107,7 +108,7 @@ def render_card_delete(card):
     if st.text_input('WRITE "CONFIRM"') == "CONFIRM" and st.button("DELETE"):
         st.success("DELETED")
         logic.delete_card(card)
-        logic.set_state(None)
+        session.set_state(None)
 
 
 def render_card_edit(card):
@@ -118,7 +119,7 @@ def render_card_edit(card):
         logic.edit_card(card, front, back)
         st.success("Added!")
 
-        logic.set_state(None)
+        session.set_state(None)
 
 
 def render_card_add_to_deck(card):
@@ -139,7 +140,7 @@ def render_card_add_to_deck(card):
             if st.button(f"ADD", key=f"add_{d.id}"):
                 logic.add_to_deck(d, card)
                 st.success("Added!")
-                logic.set_state(None)
+                session.set_state(None)
 
 
 def render_deck(deck):
@@ -169,7 +170,7 @@ def render_deck(deck):
         with col3:
             if st.button("DELETE", key=f"delete_{deck.id}"):
                 st.session_state.deleteDeckId = deck.id
-                logic.set_state("deleteDeck")
+                session.set_state("deleteDeck")
     else:
         col1, col2, col3 = st.columns([2, 0.4, 1])
         with col1:
@@ -186,7 +187,7 @@ def render_deck(deck):
         with col3:
             if st.button("DELETE", key=f"delete_{deck.id}"):
                 st.session_state.deleteDeckId = deck.id
-                logic.set_state("deleteDeck")
+                session.set_state("deleteDeck")
 
 
 def render_deck_add():
@@ -195,12 +196,12 @@ def render_deck_add():
     if st.button("ADD") and name.strip():
         logic.add_deck(name)
         st.success("Added!")
-        logic.set_state(None)
+        session.set_state(None)
 
 
 def render_backbutton():
     if st.button("BACK"):
-        logic.set_state(None)
+        session.set_state(None)
 
 
 def render_back_to_menu_button():

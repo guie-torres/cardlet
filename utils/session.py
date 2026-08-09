@@ -7,3 +7,8 @@ def on_page_load(page):
 
     st.session_state.current_page = page
     st.session_state.mode = None
+
+
+def set_state(state):
+    st.session_state.mode = state
+    st.rerun()
