@@ -1,0 +1,192 @@
+import streamlit as st
+import storage.storage as storage
+import logic
+rendered_decks = []
+
+
+def load_css(path):
+    with open(f"styles/{path}.css") as f:
+        st.markdown(f"<style>{f.read()}</style>",
+                    unsafe_allow_html=True)
+
+
+def render_card(card, deck):
+    col1, col2 = st.columns([3, 1])
+
+    with col1:
+        st.markdown(
+            f"""
+            <div class="flashcard">
+                <p class="card-front">{card.front}</p>
+                <p class="card-back">{card.back}</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    with col2:
+        if st.button("✏️ Edit", key=f"edit_{deck.id}/{card.id}", use_container_width=True):
+            st.session_state.editCardId = card.id
+            logic.set_state("editCard")
+
+        if st.button("🗑️ Delete", key=f"delete_{deck.id}/{card.id}", use_container_width=True):
+            st.session_state.deleteCardId = card.id
+            logic.set_state("deleteCard")
+
+        if st.button("✅ Add", key=f"add_{deck.id}/{card.id}", use_container_width=True):
+            st.session_state.addCardId = card.id
+            logic.set_state("addToDeck")
+
+
+def render_card_deck(card, deck):
+    col1, col2 = st.columns([3, 1])
+
+    with col1:
+        st.markdown(
+            f"""
+            <div class="flashcard">
+                <p class="card-front">{card.front}</p>
+                <p class="card-back">{card.back}</p>
+            </div>
+            """,
+            unsafe_allow_html=True
+        )
+
+    with col2:
+        if st.button("✏️ Edit", key=f"edit_{deck.id}/{card.id}", use_container_width=True):
+            logic.set_state("editCard")
+
+        if st.button("🗑️ Delete", key=f"delete_{deck.id}/{card.id}", use_container_width=True):
+            st.session_state.deleteCardId = card.id
+            logic.set_state("deleteCard")
+
+        if st.button("❌ Remove", key=f"remove_{deck.id}/{card.id}", use_container_width=True):
+            logic.remove_from_deck(deck, card)
+            st.rerun()
+
+
+def render_card_add():
+    front = st.text_input("Input front text")
+    back = st.text_input("Input back text")
+
+    if st.button("ADD") and front.strip() and back.strip():
+        logic.add_card(front, back)
+        st.success("Added!")
+
+        logic.set_state(None)
+
+
+def render_deck_delete(deck):
+    st.write('WRITE "CONFIRM" TO DELETE DECK:')
+
+    st.markdown(f"### {deck.name}")
+
+    if st.text_input('WRITE "CONFIRM"') == "CONFIRM" and st.button("DELETE"):
+        st.success("DELETED")
+        logic.delete_deck(deck)
+        logic.set_state(None)
+
+
+def render_card_delete(card):
+    st.write('WRITE "CONFIRM" TO DELETE CARD:')
+
+    st.markdown(f"### {card.front}")
+    st.markdown(f"***{card.back}***")
+
+    if st.text_input('WRITE "CONFIRM"') == "CONFIRM" and st.button("DELETE"):
+        st.success("DELETED")
+        logic.delete_card(card)
+        logic.set_state(None)
+
+
+def render_card_edit(card):
+    front = st.text_input("Input front text", card.front)
+    back = st.text_input("Input back text", card.back)
+
+    if st.button("SAVE") and front.strip() and back.strip():
+        logic.edit_card(card, front, back)
+        st.success("Added!")
+
+        logic.set_state(None)
+
+
+def render_card_add_to_deck(card):
+    st.markdown("""<h1>SELECT WHICH DECK TO ADD TO</h1>""",
+                unsafe_allow_html=True)
+
+    for d in storage.decks:
+
+        if card.id in d.cards:
+            continue
+
+        col1, col2 = st.columns([3, 1])
+
+        with col1:
+            st.markdown(f"""<h4>{d.name}</h4>""", unsafe_allow_html=True)
+
+        with col2:
+            if st.button(f"ADD", key=f"add_{d.id}"):
+                logic.add_to_deck(d, card)
+                st.success("Added!")
+                logic.set_state(None)
+
+
+def render_deck(deck):
+    if rendered_decks.__contains__(deck.id):
+        col1, col2, col3 = st.columns([2, 0.4, 1])
+        with col1:
+            st.markdown(
+                f"""
+                        ### DECK NAME: {deck.name}""")
+
+        with col2:
+            if st.button("HIDE", key=f"hide_{deck.id}"):
+                rendered_decks.remove(deck.id)
+                st.rerun()
+
+        for j in range(0, len(deck.cards)):
+            _card = storage.find_card(deck.cards[j])
+
+            if deck == storage.decks[0]:
+                render_card(_card, deck)
+            else:
+                render_card_deck(_card, deck)
+
+        if deck == storage.decks[0]:
+            return
+
+        with col3:
+            if st.button("DELETE", key=f"delete_{deck.id}"):
+                st.session_state.deleteDeckId = deck.id
+                logic.set_state("deleteDeck")
+    else:
+        col1, col2, col3 = st.columns([2, 0.4, 1])
+        with col1:
+            st.markdown(f"""### DECK NAME: {deck.name}""")
+
+        with col2:
+            if st.button("SHOW", key=f"show_{deck.id}"):
+                rendered_decks.append(deck.id)
+                st.rerun()
+
+        if deck == storage.decks[0]:
+            return
+
+        with col3:
+            if st.button("DELETE", key=f"delete_{deck.id}"):
+                st.session_state.deleteDeckId = deck.id
+                logic.set_state("deleteDeck")
+
+
+def render_deck_add():
+    name = st.text_input("Input deck name")
+
+    if st.button("ADD") and name.strip():
+        logic.add_deck(name)
+        st.success("Added!")
+        logic.set_state(None)
+
+
+def render_backbutton():
+    if st.button("BACK"):
+        logic.set_state(None)

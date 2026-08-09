@@ -41,7 +41,7 @@ def render_add():
     back = st.text_input("Input back text")
 
     if st.button("Save Card") and front.strip() and back.strip():
-        logic.add_card(front, back, storage.nextID)
+        logic.add_card(front, back)
         st.success("Added!")
 
         set_state(None)

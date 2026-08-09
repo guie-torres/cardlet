@@ -1,0 +1,33 @@
+.stButton > button{
+    height: 50px;
+    width: 75px;
+}
+
+.flashcard {
+    width: 100%;
+    min-height: 200px;
+    padding: 25px;
+    margin-bottom: 20px;
+
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    background-color: rgb(35, 43, 58);
+
+    box-sizing: border-box;
+}
+
+.card-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.card-front {
+    font-size: 24px;
+    font-weight: 600;
+    margin: 0;
+}
+
+.card-back {
+    font-size: 18px;
+    margin-top: 10px;
+}

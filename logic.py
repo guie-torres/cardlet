@@ -4,6 +4,11 @@ import streamlit as st
 import models.deck as deck
 import uuid
 
+
+def set_state(state):
+    st.session_state.mode = state
+    st.rerun()
+
 # CARD LOGIC
 
 
@@ -15,23 +20,24 @@ def add_card(front, back):
     storage.save()
 
 
-def edit_card(index, front, back):
-    if index < 0 or index >= len(storage.cards):
-        st.error("Invalid Index!")
-        return
-
-    storage.cards[int(index)].edit(front, back)
+def edit_card(card, front, back):
+    card.edit(front, back)
     storage.save()
 
 
-def delete_card(index):
+def delete_card(card):
+    for d in storage.decks:
+        if card.id in d.cards:
+            d.cards.remove(card.id)
 
-    if index < 0 or index >= len(storage.cards):
-        st.error("Invalid Index!")
-        return
-
-    del storage.cards[index]
+    storage.cards.remove(card)
     storage.save()
+
+
+def get_card_id(id):
+    for c in storage.cards:
+        if c.id == id:
+            return c
 
 # DECK LOGIC
 
@@ -41,16 +47,22 @@ def add_deck(name):
     storage.save()
 
 
-def delete_deck(id):
-    del storage.decks[id]
+def delete_deck(deck):
+    storage.decks.remove(deck)
     storage.save()
 
 
-def add_to_deck(deck, cardID):
-    deck.cards.append(cardID)
+def add_to_deck(deck, card):
+    deck.cards.append(card.id)
     storage.save()
 
 
-def remove_from_deck(deck, cardID):
-    del deck.cards[cardID]
+def remove_from_deck(deck, card):
+    deck.cards.remove(card.id)
     storage.save()
+
+
+def get_deck_id(id):
+    for d in storage.decks:
+        if d.id == id:
+            return d

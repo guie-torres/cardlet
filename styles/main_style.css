@@ -1,0 +1,27 @@
+.main-title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main-title h1 {
+    font-size: 80px;
+    white-space: nowrap;
+    margin: 0;
+}
+
+.main-title p {
+    font-size: 20px;
+}
+
+.stButton > button{
+    width: 350px;
+    height: 70px;
+    border-radius: 20px;     
+}
+
+.stButton > button p {
+    margin: 0;
+    font-size: 32px !important;
+    font-weight: 600;
+}

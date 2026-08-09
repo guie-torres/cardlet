@@ -1,6 +1,7 @@
 import streamlit as st
-import storage
+from storage import storage
 import random
+import utils.ui as ui
 
 if "card_index" not in st.session_state:
     st.session_state.card_index = 0
@@ -14,6 +15,9 @@ if "mode" not in st.session_state:
 if len(storage.cards) <= 0:
     st.write("NO CARDS!")
     st.stop()
+
+ui.load_css("practice_style")
+# ui.load_css("general_buttons")
 
 
 def set_state(state):
