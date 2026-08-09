@@ -4,11 +4,6 @@ import streamlit as st
 import models.deck as deck
 import uuid
 
-
-def set_state(state):
-    st.session_state.mode = state
-    st.rerun()
-
 # CARD LOGIC
 
 

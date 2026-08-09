@@ -39,10 +39,10 @@ def render_main():
 
     with col1:
         if st.button("ADD CARD"):
-            logic.set_state("addCard")
+            session.set_state("addCard")
     with col2:
         if st.button("ADD DECK"):
-            logic.set_state("addDeck")
+            session.set_state("addDeck")
 
     list()
     ui.render_back_to_menu_button()
