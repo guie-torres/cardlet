@@ -190,3 +190,8 @@ def render_deck_add():
 def render_backbutton():
     if st.button("BACK"):
         logic.set_state(None)
+
+
+def render_back_to_menu_button():
+    if st.button("RETURN TO MAIN MENU"):
+        st.switch_page("Main.py")

@@ -42,6 +42,7 @@ def render_main():
             logic.set_state("addDeck")
 
     list()
+    ui.render_back_to_menu_button()
 
 
 def render_add_card():
