@@ -17,9 +17,14 @@ st.markdown(
     unsafe_allow_html=True
 )
 
+amount = st.number_input(
+    "Enter the number of cards you want to generate (optional, 0 = any)", key="ai_amount", min_value=0)
 input = st.text_input("Enter a theme or source", key="ai_input")
 
 if input and st.button("CONFIRM"):
-    aiDeck = ai.generate_deck(input)
+    if (amount == 0):
+        amount = "any amount of"
+
+    aiDeck = ai.generate_deck(input, amount)
     storage.ai_deck_converter(aiDeck)
     st.success("Deck generated! Check the Manage page to view it")

@@ -18,7 +18,7 @@ load_dotenv()
 client = OpenAI()
 
 
-def generate_deck(topic: str) -> AIDeck:
+def generate_deck(topic: str, amount) -> AIDeck:
     response = client.responses.parse(
         model="gpt-5-mini",
 
@@ -41,12 +41,12 @@ def generate_deck(topic: str) -> AIDeck:
                 - There are two types of expected inputs
                     1) A general theme, generate flashcards relating to the theme
                     2) A source (e.g. a paragraph of text), generate flashcards based on the source
-                - The input will be provided in the "content" field of the user message.
+                - The input will be provided in the "content" field of the user message
                 """
             },
             {
                 "role": "user",
-                "content": f"""Create a flashcard deck about: {topic}"""
+                "content": f"""Create a flashcard deck about: {topic}, it should contain {amount} card(s)"""
             }
         ],
 
