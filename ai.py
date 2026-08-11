@@ -18,7 +18,7 @@ load_dotenv()
 client = OpenAI()
 
 
-def generate_deck(topic: str, amount) -> AIDeck:
+def generate_deck(topic: str, name, amount) -> AIDeck:
     response = client.responses.parse(
         model="gpt-5-mini",
 
@@ -46,7 +46,7 @@ def generate_deck(topic: str, amount) -> AIDeck:
             },
             {
                 "role": "user",
-                "content": f"""Create a flashcard deck about: {topic}, it should contain {amount} card(s)"""
+                "content": f"""Create a flashcard deck about: {topic}, it should contain {amount} card(s) and be named {name}"""
             }
         ],
 
