@@ -99,6 +99,26 @@ def render_deck_delete(deck):
         session.set_state(None)
 
 
+def render_deck_export(deck):
+    st.markdown(
+        f"""
+        <div style=display: flex; flex-direction: column; justify-content: flex-start;>
+        <h1 style = font-size: 80px; white-space: nowrap; margin: 0;>
+        EXPORT DECK: {deck.name}
+        </h1>
+        <p>Export the deck to quizlet!</p>
+        </div>""", unsafe_allow_html=True)
+    q_deck = logic.convert_deck_to_quizlet(deck)
+    st.code(q_deck, language=None)
+
+    st.download_button(
+        "DOWNLOAD",
+        data=q_deck,
+        file_name=f"{deck.name}.txt",
+        mime="text/plain"
+    )
+
+
 def render_card_delete(card):
     st.write('WRITE "CONFIRM" TO DELETE CARD:')
 
@@ -145,7 +165,7 @@ def render_card_add_to_deck(card):
 
 def render_deck(deck):
     if rendered_decks.__contains__(deck.id):
-        col1, col2, col3 = st.columns([2, 0.4, 1])
+        col1, col2, col3, col4 = st.columns([2, 0.4, 0.4, 0.4])
         with col1:
             st.markdown(
                 f"""
@@ -164,15 +184,20 @@ def render_deck(deck):
             else:
                 render_card_deck(_card, deck)
 
+        with col3:
+            if st.button("EXPORT", key=f"export_{deck.id}"):
+                st.session_state.exportDeckId = deck.id
+                session.set_state("exportDeck")
+
         if deck == storage.decks[0]:
             return
 
-        with col3:
+        with col4:
             if st.button("DELETE", key=f"delete_{deck.id}"):
                 st.session_state.deleteDeckId = deck.id
                 session.set_state("deleteDeck")
     else:
-        col1, col2, col3 = st.columns([2, 0.4, 1])
+        col1, col2, col3, col4 = st.columns([2, 0.4, 0.4, 0.4])
         with col1:
             st.markdown(f"""### DECK NAME: {deck.name}""")
 
@@ -181,10 +206,15 @@ def render_deck(deck):
                 rendered_decks.append(deck.id)
                 st.rerun()
 
+        with col3:
+            if st.button("EXPORT", key=f"export_{deck.id}"):
+                st.session_state.exportDeckId = deck.id
+                session.set_state("exportDeck")
+
         if deck == storage.decks[0]:
             return
 
-        with col3:
+        with col4:
             if st.button("DELETE", key=f"delete_{deck.id}"):
                 st.session_state.deleteDeckId = deck.id
                 session.set_state("deleteDeck")

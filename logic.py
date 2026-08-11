@@ -64,3 +64,14 @@ def get_deck_id(id):
     for d in storage.decks:
         if d.id == id:
             return d
+
+
+def convert_deck_to_quizlet(deck):
+    result = ""
+
+    for card_id in deck.cards:
+        _card = storage.find_card(card_id)
+
+        result += f"{_card.front}\t{_card.back}\n"
+
+    return result

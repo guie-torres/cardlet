@@ -3,6 +3,11 @@
     width: 75px;
 }
 
+.stDownloadButton > button{
+    height: 50px;
+    width: 100px;
+}
+
 .flashcard {
     width: 100%;
     min-height: 200px;
