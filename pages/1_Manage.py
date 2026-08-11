@@ -25,6 +25,9 @@ if "addCardId" not in st.session_state:
 if "exportDeckId" not in st.session_state:
     st.session_state.exportDeckId = None
 
+if "renameDeckId" not in st.session_state:
+    st.session_state.renameDeckId = None
+
 
 def list():
     if len(storage.decks) <= 0:
@@ -86,6 +89,11 @@ def render_export_deck():
     ui.render_backbutton()
 
 
+def render_rename_deck():
+    ui.render_deck_rename(logic.get_deck_id(st.session_state.renameDeckId))
+    ui.render_backbutton()
+
+
 match st.session_state.mode:
 
     case None:
@@ -100,6 +108,8 @@ match st.session_state.mode:
         render_add_deck()
     case "deleteDeck":
         render_delete_deck()
+    case "renameDeck":
+        render_rename_deck()
     case "exportDeck":
         render_export_deck()
     case "addToDeck":

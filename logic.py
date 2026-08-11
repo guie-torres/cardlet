@@ -50,6 +50,11 @@ def delete_deck(deck):
     storage.save()
 
 
+def rename_deck(deck, name):
+    deck.name = name
+    storage.save()
+
+
 def add_to_deck(deck, card):
     deck.cards.append(card.id)
     storage.save()

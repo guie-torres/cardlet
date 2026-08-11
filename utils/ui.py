@@ -137,7 +137,17 @@ def render_card_edit(card):
 
     if st.button("SAVE") and front.strip() and back.strip():
         logic.edit_card(card, front, back)
-        st.success("Added!")
+        st.success("Saved!")
+
+        session.set_state(None)
+
+
+def render_deck_rename(deck):
+    name = st.text_input("Input new name", deck.name)
+
+    if st.button("SAVE") and name.strip():
+        logic.rename_deck(deck, name)
+        st.success("Saved!")
 
         session.set_state(None)
 
@@ -165,7 +175,7 @@ def render_card_add_to_deck(card):
 
 def render_deck(deck):
     if rendered_decks.__contains__(deck.id):
-        col1, col2, col3, col4 = st.columns([2, 0.4, 0.4, 0.4])
+        col1, col2, col3, col4, col5 = st.columns([2, 0.4, 0.4, 0.4, 0.4])
         with col1:
             st.markdown(
                 f"""
@@ -193,11 +203,16 @@ def render_deck(deck):
             return
 
         with col4:
+            if st.button("EDIT", key=f"rename_{deck.id}"):
+                st.session_state.renameDeckId = deck.id
+                session.set_state("renameDeck")
+
+        with col5:
             if st.button("DELETE", key=f"delete_{deck.id}"):
                 st.session_state.deleteDeckId = deck.id
                 session.set_state("deleteDeck")
     else:
-        col1, col2, col3, col4 = st.columns([2, 0.4, 0.4, 0.4])
+        col1, col2, col3, col4, col5 = st.columns([2, 0.4, 0.4, 0.4, 0.4])
         with col1:
             st.markdown(f"""### DECK NAME: {deck.name}""")
 
@@ -215,6 +230,11 @@ def render_deck(deck):
             return
 
         with col4:
+            if st.button("EDIT", key=f"rename_{deck.id}"):
+                st.session_state.renameDeckId = deck.id
+                session.set_state("renameDeck")
+
+        with col5:
             if st.button("DELETE", key=f"delete_{deck.id}"):
                 st.session_state.deleteDeckId = deck.id
                 session.set_state("deleteDeck")
