@@ -7,6 +7,28 @@ import utils.session as session
 session.on_page_load("AI_deck_maker")
 ui.load_css("AI_maker")
 
+
+def generate_deck(input, name, amount):
+    aiDeck = ai.generate_deck(input, name, amount)
+
+    if aiDeck.error:
+        st.error(f"Error: {aiDeck.error_message}")
+        return
+
+    if len(aiDeck.cards) == 0:
+        st.error(
+            "No cards were generated. Please try again")
+        return
+
+    if len(aiDeck.cards) != amount and amount != "anything":
+        st.warning(
+            f"The AI generated {len(aiDeck.cards)} cards instead of {amount}."
+        )
+
+    storage.ai_deck_converter(aiDeck)
+    st.success("Deck generated! Check the Manage page to view it")
+
+
 st.markdown(
     """
     <div class="main-title">
@@ -30,6 +52,4 @@ if input and st.button("CONFIRM"):
     if (name.strip() == ""):
         amount = "anything"
 
-    aiDeck = ai.generate_deck(input, name, amount)
-    storage.ai_deck_converter(aiDeck)
-    st.success("Deck generated! Check the Manage page to view it")
+    generate_deck(input, name, amount)

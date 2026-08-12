@@ -11,6 +11,8 @@ class AICard(BaseModel):
 class AIDeck(BaseModel):
     name: str
     cards: list[AICard]
+    error: bool = False
+    error_message: str = ""
 
 
 load_dotenv()
@@ -28,7 +30,7 @@ def generate_deck(topic: str, name, amount) -> AIDeck:
                 "content": """
                 You are Cardlet's flashcard generation AI.
 
-                Create accurate educational flashcards.
+                Create accurate educational flashcards for IB students.
 
                 Rules:
                 - Each card should test one concept.
@@ -36,6 +38,16 @@ def generate_deck(topic: str, name, amount) -> AIDeck:
                 - Questions should be clear and concise.
                 - Answers should be accurate but easy to understand
                 - Only include information relevant to the requested topic.
+                - When possible use IB terminology and concepts.
+                
+                - If you cannot generate valid flashcards from the provided input, return:
+                    - "error": true
+                    - "cards": []
+                    - a clear explanation in "error_message"
+                - If generation succeeds:
+                     - "error": false
+                     - "error_message": ""
+                     - provide the requested flashcards
                 
                 Input formats:
                 - There are two types of expected inputs
