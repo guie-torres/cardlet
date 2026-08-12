@@ -4,6 +4,9 @@ import utils.ui as ui
 import logic
 import utils.session as session
 
+if "current_page" not in st.session_state:
+    st.session_state.current_page = "none"
+
 session.on_page_load("manage")
 ui.load_css("general")
 
@@ -28,8 +31,12 @@ if "exportDeckId" not in st.session_state:
 if "renameDeckId" not in st.session_state:
     st.session_state.renameDeckId = None
 
+if "loaded" not in st.session_state:
+    storage.load()
+    st.session_state.loaded = True
 
-def list():
+
+def render_decks():
     if len(storage.decks) <= 0:
         st.write("No Decks!")
         return
@@ -50,7 +57,7 @@ def render_main():
         if st.button("ADD DECK"):
             session.set_state("addDeck")
 
-    list()
+    render_decks()
     ui.render_back_to_menu_button()
 
 

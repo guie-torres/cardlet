@@ -4,6 +4,9 @@ import random
 import utils.ui as ui
 import utils.session as session
 
+if "current_page" not in st.session_state:
+    st.session_state.current_page = "none"
+
 session.on_page_load("practice")
 
 if "card_index" not in st.session_state:
@@ -17,6 +20,10 @@ if "mode" not in st.session_state:
 
 if "front" not in st.session_state:
     st.session_state.front = True
+
+if "loaded" not in st.session_state:
+    storage.load()
+    st.session_state.loaded = True
 
 if len(storage.cards) <= 0:
     st.write("NO CARDS!")
@@ -44,7 +51,7 @@ def practice():
     if st.session_state.card_index < len(st.session_state.s_deck):
         render_card(storage.find_card(
             st.session_state.s_deck[st.session_state.card_index]))
-    elif st.button("RESHUFFLE"):
+    elif st.button("AGAIN"):
         st.session_state.s_deck = shuffle_deck(st.session_state.s_deck)
         st.session_state.card_index = 0
         st.rerun()

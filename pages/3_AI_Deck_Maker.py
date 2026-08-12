@@ -4,15 +4,22 @@ import ai
 import utils.ui as ui
 import utils.session as session
 
+if "current_page" not in st.session_state:
+    st.session_state.current_page = "none"
+
 session.on_page_load("AI_deck_maker")
 ui.load_css("AI_maker")
+
+if "loaded" not in st.session_state:
+    storage.load()
+    st.session_state.loaded = True
 
 
 def generate_deck(input, name, amount):
     aiDeck = ai.generate_deck(input, name, amount)
 
     if aiDeck.error:
-        st.error(f"Error: {aiDeck.error_message}")
+        st.error(f"ERROR: {aiDeck.error_message}")
         return
 
     if len(aiDeck.cards) == 0:
@@ -40,7 +47,7 @@ st.markdown(
 )
 
 amount = st.number_input(
-    "Enter the number of cards you want to generate (optional, 0 = any)", key="ai_amount", min_value=0)
+    "Enter the number of cards you want to generate (optional, 0 = any)", key="ai_amount", min_value=0, max_value=50, step=1)
 name = st.text_input(
     "Enter the name of the deck (optional)", key="ai_name")
 input = st.text_input("Enter a theme or source", key="ai_input")
