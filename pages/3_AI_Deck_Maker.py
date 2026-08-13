@@ -24,7 +24,7 @@ def generate_deck(input, name, amount):
 
     if len(aiDeck.cards) == 0:
         st.error(
-            "No cards were generated. Please try again")
+            "No cards were generated, please try again")
         return
 
     if len(aiDeck.cards) != amount and amount != "anything":
