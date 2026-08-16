@@ -8,10 +8,17 @@ The purpose of this project was for me to learn Python and experiment with using
 
 ## Preview
 
-<!-- prettier-ignore -->
-|AI Deck Maker|Manual Deck Maker|Practice|
-|----------- |-----------|-----------|
-|![AI preview](./preview/Cardlet_AI_Preview.gif)|![Manual preview](./preview/Cardlet_Manual_Preview.gif)|![Practice preview](./preview/Cardlet_Practice_Preview.gif)|
+### AI Deck Maker
+
+![AI preview](./preview/Cardlet_AI_Preview.gif)
+
+### Manual Deck Maker
+
+![Manual preview](./preview/Cardlet_Manual_Preview.gif)
+
+### Practice
+
+![Practice preview](./preview/Cardlet_Practice_Preview.gif)
 
 ## Features
 
