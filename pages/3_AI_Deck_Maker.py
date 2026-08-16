@@ -27,7 +27,7 @@ def generate_deck(input, name, amount):
             "No cards were generated, please try again")
         return
 
-    if len(aiDeck.cards) != amount and amount != "anything":
+    if len(aiDeck.cards) != amount and amount != "any amount of":
         st.warning(
             f"The AI generated {len(aiDeck.cards)} cards instead of {amount}."
         )
@@ -57,6 +57,6 @@ if input and st.button("CONFIRM"):
         amount = "any amount of"
 
     if (name.strip() == ""):
-        amount = "anything"
+        name = "anything"
 
     generate_deck(input, name, amount)
