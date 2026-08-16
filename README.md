@@ -8,7 +8,10 @@ The purpose of this project was for me to learn Python and experiment with using
 
 ## Preview
 
-Coming soon.
+<!-- prettier-ignore -->
+|AI Deck Maker|Manual Deck Maker|Practice|
+|----------- |-----------|-----------|
+|![AI preview](./preview/Cardlet_AI_Preview.gif)|![Manual preview](./preview/Cardlet_Manual_Preview.gif)|![Practice preview](./preview/Cardlet_Practice_Preview.gif)|
 
 ## Features
 
@@ -17,8 +20,9 @@ Coming soon.
 - Practice
 - Create decks using AI
 - Export decks to Quizlet
-  
+
 ## Technologies
+
 - **Python**
 - **Streamlit**
 - **OpenAI API**
@@ -31,6 +35,11 @@ Coming soon.
 
 ```text
 Cardlet/
+│
+├── preview/
+│   ├── Cardlet_AI_Preview.gif
+│   ├── Cardlet_Manual_Preview.gif
+│   └── Cardlet_Practice_Preview.gif
 │
 ├── models/
 │   ├── card.py
@@ -73,6 +82,7 @@ Cardlet currently runs locally using Streamlit.
 git clone https://github.com/guie-torres/cardlet/
 cd Cardlet
 ```
+
 **Using a virtual environment is recommended:**
 
 ```bash
@@ -111,7 +121,6 @@ streamlit run Main.py
 
 Streamlit will open Cardlet in your browser.
 
-
 ## AI Architecture
 
 Cardlet uses the OpenAI API to generate structured flashcard decks.
@@ -143,17 +152,17 @@ Cardlet can convert your AI generated or manually created decks into a suitable 
 
 Cardlet generates a copyable/downloadable text file which can be copied into Quizlet as follows:
 
-1) Open Quizlet
-2) Press the blue "+" button
-3) Press the "flashcard set" button
-4) Press the "+ Import" button
-5) Between term and definition: **Tab**
-6) Between cards: **New line**
-7) Open Cardlet
-8) Select your deck
-9) Click export
-10) Copy the generated text into Quizlet
-11) Press the "Import" button
+1. Open Quizlet
+2. Press the blue "+" button
+3. Press the "flashcard set" button
+4. Press the "+ Import" button
+5. Between term and definition: **Tab**
+6. Between cards: **New line**
+7. Open Cardlet
+8. Select your deck
+9. Click export
+10. Copy the generated text into Quizlet
+11. Press the "Import" button
 
 > **Note:** Quizlet's interface may change over time, so the exact steps may differ in future versions.
 
@@ -168,6 +177,7 @@ OPENAI_API_KEY=your_api_key_here
 This file together with the key are not included in the repository. Hence one has to create it on their own if they wish to use the AI features.
 
 > **Never commit your `.env` file or API key to GitHub.**
+
 ## What I Learned
 
 Cardlet was my first project made in Python, so the main purpose of the project was to become comfortable with Python and its ecosystem.
@@ -177,6 +187,7 @@ Additionally, this was my first time working with the OpenAI API. Through Cardle
 ## Future Improvements
 
 Possible future improvements include:
+
 - Spaced repetition
 - More advanced practice modes
 - Keyboard shortcuts
@@ -186,4 +197,5 @@ Possible future improvements include:
 - More advanced AI generation controls
 
 ## License
+
 This project was created as a personal programming and portfolio project.
