@@ -66,6 +66,7 @@ def render_card_deck(card, deck):
 
     with col2:
         if st.button("✏️ Edit", key=f"edit_{deck.id}/{card.id}", use_container_width=True):
+            st.session_state.editCardId = card.id
             session.set_state("editCard")
 
         if st.button("🗑️ Delete", key=f"delete_{deck.id}/{card.id}", use_container_width=True):
